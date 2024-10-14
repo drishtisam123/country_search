@@ -1,0 +1,80 @@
+<!-- country_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #343a40;
+        }
+        .search-input {
+            margin-bottom: 20px;
+        }
+        .country-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .country-table th, .country-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+        .country-table th {
+            background-color: #343a40;
+            color: white;
+        }
+        .country-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Country Search</h1>
+        <input type="text" id="searchInput" class="form-control search-input" placeholder="Search for countries..." onkeyup="searchCountries()">
+        
+        <table class="table country-table">
+            <thead>
+                <tr>
+                    <th>Country Name</th>
+                </tr>
+            </thead>
+            <tbody id="countryTableBody">
+                {% for country in countries %}
+                <tr>
+                    <td>{{ country.name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function searchCountries() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const tableBody = document.getElementById('countryTableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const countryName = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                if (countryName.includes(input)) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
